@@ -7,6 +7,12 @@ Classical snake game implemented in Ruby using the library Curses. It allows you
 gem install snake_game
 ```
 
+And then execute the binary:
+
+```
+snake_game
+```
+
 ## Changelog
 * **0.0.1** First version (07/04/2014)
 
