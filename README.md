@@ -13,6 +13,10 @@ And then execute the binary:
 snake_game
 ```
 
+## Demo
+
+![Demo](/img/demo.gif "Demo")
+
 ## Changelog
 * **0.0.1** First version (07/04/2014)
 
