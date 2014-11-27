@@ -7,7 +7,7 @@ class Game
 
   def initialize
     @window = TermWindow.new
-    @snake = Snake.new([[4,10], [4,9], [4,8]])
+    @snake = Snake.new()
   end
 
   def create
@@ -42,13 +42,13 @@ class Game
 
       case key
       when Curses::KEY_DOWN
-        @snake.insert(0, [@snake[0][0], @snake[0][1] + 1])
+        @snake.move_to(@snake.x, @snake.y + 1)
       when Curses::KEY_UP
-        @snake.insert(0, [@snake[0][0], @snake[0][1] - 1])
+        @snake.move_to(@snake.x, @snake.y - 1)
       when Curses::KEY_LEFT
-        @snake.insert(0, [@snake[0][0] - 1, @snake[0][1]])
+        @snake.move_to(@snake.x - 1, @snake.y)
       when Curses::KEY_RIGHT
-        @snake.insert(0, [@snake[0][0] + 1, @snake[0][1]])
+        @snake.move_to(@snake.x + 1, @snake.y)
       end
 
       @snake[0][0] = (window.width.to_i - 2) if @snake[0][0] == 0
@@ -61,19 +61,22 @@ class Game
       end
 
       if food.has_been_eaten_by?(@snake)
+        @snake.grow
         score += food.points
         food = Food.new(window)
         food.relocate_without_conflict!(@snake)
         window.paint_food(food)
       else
-        last_part = @snake.pop
-        window.setpos(last_part[1], last_part[0])
-        window.addstr(' ')
+        last_part = @snake.last_part
+        if (last_part!=nil)
+          window.setpos(last_part[1], last_part[0])
+          window.addstr(' ')
+        end
       end
 
       window.paint_snake(@snake)
     end
-    
+
     window.close
     Curses.close_screen
 
