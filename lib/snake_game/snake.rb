@@ -9,6 +9,10 @@ class Snake
     @length = @body.length
   end
 
+  def move_by(direction)
+    move_to(x + direction[0], y + direction[1])
+  end
+
   def x
     @body[0][0]
   end

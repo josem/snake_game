@@ -8,6 +8,7 @@ class Game
   def initialize
     @window = TermWindow.new
     @snake = Snake.new()
+    @directions = {Curses::KEY_DOWN => [0,1], Curses::KEY_UP => [0,-1], Curses::KEY_LEFT => [-1,0], Curses::KEY_RIGHT => [1,0] }
   end
 
   def create
@@ -40,15 +41,8 @@ class Game
 
       key = prev_key unless [Curses::KEY_DOWN, Curses::KEY_UP, Curses::KEY_RIGHT, Curses::KEY_LEFT, 27].include?(key)
 
-      case key
-      when Curses::KEY_DOWN
-        @snake.move_to(@snake.x, @snake.y + 1)
-      when Curses::KEY_UP
-        @snake.move_to(@snake.x, @snake.y - 1)
-      when Curses::KEY_LEFT
-        @snake.move_to(@snake.x - 1, @snake.y)
-      when Curses::KEY_RIGHT
-        @snake.move_to(@snake.x + 1, @snake.y)
+      if @directions.include?(key)
+        @snake.move_by(@directions[key])
       end
 
       @snake[0][0] = (window.width.to_i - 2) if @snake[0][0] == 0
