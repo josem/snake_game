@@ -8,7 +8,11 @@ class Game
   def initialize
     @window = TermWindow.new
     @snake = Snake.new()
-    @directions = {Curses::KEY_DOWN => [0,1], Curses::KEY_UP => [0,-1], Curses::KEY_LEFT => [-1,0], Curses::KEY_RIGHT => [1,0] }
+    @key_to_direction = {
+      Curses::KEY_DOWN => Direction::DOWN,
+      Curses::KEY_UP => Direction::UP,
+      Curses::KEY_LEFT => Direction::LEFT,
+      Curses::KEY_RIGHT => Direction::RIGHT }
   end
 
   def create
@@ -22,6 +26,7 @@ class Game
 
   private
   def run
+
     key = Curses::KEY_RIGHT
     score = 0
 
@@ -39,11 +44,9 @@ class Game
       event = window.getch()
       key = event == -1 ? key : event
 
-      key = prev_key unless [Curses::KEY_DOWN, Curses::KEY_UP, Curses::KEY_RIGHT, Curses::KEY_LEFT, 27].include?(key)
+      @snake.set_direction(@key_to_direction[key]) if @key_to_direction.include?(key)
 
-      if @directions.include?(key)
-        @snake.move_by(@directions[key])
-      end
+      @snake.tick
 
       @snake[0][0] = (window.width.to_i - 2) if @snake[0][0] == 0
       @snake[0][1] = (window.height.to_i - 2) if @snake[0][1] == 0

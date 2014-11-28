@@ -2,11 +2,20 @@ require 'set'
 
 class Snake
   SYMBOL = 'O'
-  attr_reader :length, :last_part
+  attr_reader :length, :last_part, :current_direction
 
   def initialize
     @body = [[4,10], [4,9], [4,8]]
     @length = @body.length
+    @current_direction = Direction::RIGHT
+  end
+
+  def set_direction(direction)
+    @current_direction = direction
+  end
+
+  def tick
+    move_by(@current_direction)
   end
 
   def move_by(direction)
