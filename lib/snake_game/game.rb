@@ -7,7 +7,8 @@ class Game
 
   def initialize
     @window = TermWindow.new
-    @snake = Snake.new()
+    @board = Board.new
+    @snake = Snake.new(@board)
     @key_to_direction = {
       Curses::KEY_DOWN => Direction::DOWN,
       Curses::KEY_UP => Direction::UP,
@@ -40,7 +41,6 @@ class Game
       window.addstr(" Score: #{score.to_s} ")
       window.timeout = 150
 
-      prev_key = key
       event = window.getch()
       key = event == -1 ? key : event
 
@@ -48,10 +48,6 @@ class Game
 
       @snake.tick
 
-      @snake[0][0] = (window.width.to_i - 2) if @snake[0][0] == 0
-      @snake[0][1] = (window.height.to_i - 2) if @snake[0][1] == 0
-      @snake[0][0] = 1 if @snake[0][0] == window.width - 1
-      @snake[0][1] = 1 if @snake[0][1] == window.height - 1
 
       if snake.crashed?
         break

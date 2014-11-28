@@ -4,10 +4,11 @@ class Snake
   SYMBOL = 'O'
   attr_reader :length, :last_part, :current_direction
 
-  def initialize
+  def initialize(board)
     @body = [[4,10], [4,9], [4,8]]
     @length = @body.length
     @current_direction = Direction::RIGHT
+    @board = board
   end
 
   def set_direction(direction)
@@ -19,7 +20,8 @@ class Snake
   end
 
   def move_by(direction)
-    move_to(x + direction[0], y + direction[1])
+    new_pos = @board.next_to(@body[0], direction)
+    move_to(new_pos[0], new_pos[1])
   end
 
   def x
