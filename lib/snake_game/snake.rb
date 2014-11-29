@@ -1,72 +1,48 @@
 require 'set'
 
-class Snake
-  SYMBOL = 'O'
-  attr_reader :length, :last_part, :current_direction
+class Snake < Being
 
-  def initialize(board)
-    @body = [[4,10], [4,9], [4,8]]
-    @length = @body.length
+  def initialize(universe, point = Point.new(4,10), length = 3 )
+    super.initialize(universe, point)
+    @length = length
     @current_direction = Direction::RIGHT
-    @board = board
+    @alive = true
+    move until body.length==length
   end
 
   def set_direction(direction)
-    @current_direction = direction
+    @current_direction = direction unless Direction.are_opposite?(@current_direction, direction)
   end
 
-  def tick
+  def move
     move_by(@current_direction)
   end
 
+  private
+
   def move_by(direction)
-    new_pos = @board.next_to(@body[0], direction)
-    move_to(new_pos[0], new_pos[1])
+    position = universe.next_to(head, direction)
+    move_to(position)
   end
 
-  def x
-    @body[0][0]
+  def move_to(position)
+    cell = universe.cell_at(position)
+    eat(cell.resident)
+    body.unshift(position)
+    trim
   end
 
-  def y
-    @body[0][1]
+  def eat(other)
+    other.kill
+    self.grow
   end
 
   def grow
     @length +=1
   end
 
-  def move_to(x,y)
-    @body.insert(0, [x, y])
-    trim
-  end
-
-  def include?(elem)
-    @body.include?(elem)
-  end
-
-  def [](idx)
-    @body[idx]
-  end
-
-  def crashed?
-    visited = Set.new
-
-    @body.each_with_index do |position, i|
-      if visited.include?(position)
-        return true
-      else
-        visited << position
-      end
-    end
-
-    return false
-  end
-
-  private
-
   def trim
-    @last_part = @body.pop while @length < @body.length
+    body.pop while @length < body.length
   end
 
 end

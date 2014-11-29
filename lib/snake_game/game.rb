@@ -1,7 +1,13 @@
 require 'curses'
 
 class Game
+  ESCAPE_KEY = 27
   INVISIBLE_CURSOR = 0
+  KEY_TO_DIRECTION = {
+      Curses::KEY_DOWN => Direction::DOWN,
+      Curses::KEY_UP => Direction::UP,
+      Curses::KEY_LEFT => Direction::LEFT,
+      Curses::KEY_RIGHT => Direction::RIGHT }
 
   attr_reader :window, :snake
 
@@ -9,16 +15,11 @@ class Game
     @window = TermWindow.new
     @board = Board.new
     @snake = Snake.new(@board)
-    @key_to_direction = {
-      Curses::KEY_DOWN => Direction::DOWN,
-      Curses::KEY_UP => Direction::UP,
-      Curses::KEY_LEFT => Direction::LEFT,
-      Curses::KEY_RIGHT => Direction::RIGHT }
   end
 
   def create
-    Curses.init_screen()
-    Curses.cbreak()
+    Curses.init_screen
+    Curses.cbreak
     Curses.noecho
     Curses.curs_set(INVISIBLE_CURSOR)
 
@@ -28,24 +29,17 @@ class Game
   private
   def run
 
-    key = Curses::KEY_RIGHT
     score = 0
 
-    food = Food.new(window)
-    food.relocate_without_conflict!(@snake)
 
-    window.paint_food(food)
-
-    while (key != 27)
+    while key != ::ESCAPE_KEY
       window.setpos(0, (window.width / 2) - 10)
       window.addstr(" Score: #{score.to_s} ")
       window.timeout = 150
 
-      event = window.getch()
-      key = event == -1 ? key : event
+      key = window.getch()
 
       @snake.set_direction(@key_to_direction[key]) if @key_to_direction.include?(key)
-
       @snake.tick
 
 

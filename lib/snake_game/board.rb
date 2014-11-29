@@ -1,30 +1,20 @@
-class Board
-  DEFAULT_WIDTH = 100
-  DEFAULT_HEIGHT = 20
+class Universe
 
-  attr_accessor :width, :height
-
-  def initialize(height = DEFAULT_HEIGHT, width = DEFAULT_WIDTH)
-    @width, @height = width, height
+  def initialize(size = Point.new(100, 20))
+    @size = size
+    @population = Set.new
   end
 
-
-  def occupied?(cell)
+  def cell_at(point)
+    Cell.new(point, self)
   end
 
-  def occupy(cell, who)
+  def next_to(point, direction)
+    (point + direction) % size
   end
 
-  def release(cell)
-  end
-
-  def next_to(cell, direction)
-    new_pos = [cell[0] + direction[0], cell[1] + direction[1]]
-    new_pos[0] = @width - 2  if new_pos[0] == 0
-    new_pos[1] = @height - 2 if new_pos[1] == 0
-    new_pos[0] = 1 if new_pos[0] == @width - 1
-    new_pos[1] = 1 if new_pos[1] == @height - 1
-    new_pos
+  def leave(being)
+    @population.delete(being)
   end
 
 end
