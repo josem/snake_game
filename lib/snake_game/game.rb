@@ -22,7 +22,7 @@ class Game
       @output.set_title(" Score: #{@snake.score} ")
     end
     @output.close
-    puts("----- GAME OVER -----")
-    puts("----- Score: #{@snake.score} -----")
+    puts('----- GAME OVER -----')
+    puts('----- Score: #{@snake.score} -----')
   end
 end

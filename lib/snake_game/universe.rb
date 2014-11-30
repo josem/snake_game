@@ -8,7 +8,7 @@ class Universe
   attr_reader :size
 
   def resident_at(point)
-    @population.select {|being| being.include?(point)}.first
+    @population.select { |being| being.include?(point) }.first
   end
 
   def next_to(point, direction)
@@ -24,7 +24,7 @@ class Universe
   end
 
   def move
-    @population.clone.each {|being| being.move}
+    @population.clone.each { |being| being.move }
   end
 
 end

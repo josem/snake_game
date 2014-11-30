@@ -2,7 +2,7 @@ require 'set'
 
 class Snake < Being
 
-  def initialize(universe, output, input, point = Point.new(4,10), initial_length = 3 )
+  def initialize(universe, output, input, point = Point.new(4, 10), initial_length = 3)
     super(universe, point, output)
     @length = @initial_length = initial_length
     @alive = true
@@ -16,7 +16,7 @@ class Snake < Being
   end
 
   def score
-    @length -  @initial_length
+    @length - @initial_length
   end
 
   private
@@ -31,7 +31,7 @@ class Snake < Being
     eat(other) unless other.nil?
     body.unshift(position)
     trim
-    @output.draw('O', position)
+    output.draw('O', position)
   end
 
   def eat(other)
@@ -46,7 +46,7 @@ class Snake < Being
   def trim
     while body.length > @length
       left_point = body.pop
-      @output.clear(left_point)
+      output.clear(left_point)
     end
   end
 

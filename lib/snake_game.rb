@@ -1,4 +1,4 @@
-require "snake_game/version"
+require 'snake_game/version'
 
 module SnakeGame
   require 'snake_game/point'

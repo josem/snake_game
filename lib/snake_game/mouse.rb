@@ -9,7 +9,7 @@ class Mouse < Being
 
   def kill
     super
-    new_mouse = Mouse.new(@universe, output)
+    new_mouse = Mouse.new(universe, output)
     universe.add(new_mouse)
     output.clear(head)
   end

@@ -12,7 +12,7 @@ class Output
     Curses.noecho
     Curses.curs_set(INVISIBLE_CURSOR)
 
-    size_with_frame = size + Point.new(2,2)
+    size_with_frame = size + Point.new(2, 2)
     @window = Curses::Window.new(size_with_frame.y, size_with_frame.x, 0, 0)
     @window.box(?|, ?-)
     @window.keypad(true)
@@ -30,7 +30,7 @@ class Output
   end
 
   def draw(symbol, point)
-    point +=Point.new(1,1)
+    point +=Point.new(1, 1)
     @window.setpos(point.y, point.x)
     @window.addstr(symbol)
     @window.refresh

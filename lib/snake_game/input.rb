@@ -7,7 +7,7 @@ class Input
       Curses::KEY_DOWN => Direction::DOWN,
       Curses::KEY_UP => Direction::UP,
       Curses::KEY_LEFT => Direction::LEFT,
-      Curses::KEY_RIGHT => Direction::RIGHT }
+      Curses::KEY_RIGHT => Direction::RIGHT}
 
   def initialize(window)
     @window = window
