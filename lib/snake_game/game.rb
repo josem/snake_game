@@ -1,10 +1,9 @@
 class Game
 
-
   def initialize(width = 100, height = 20)
     size = Point.new(width, height)
-    size_with_frame = size + Point.new(2,2)
-    @output = Output.new(size_with_frame.x, size_with_frame.y)
+
+    @output = Output.new(size)
     @input = Input.new(@output.window)
 
     @universe = Universe.new(size)
@@ -20,6 +19,10 @@ class Game
       @input.scan
       break if @input.exit? or not @snake.alive?
       @universe.move
+      @output.set_title(" Score: #{@snake.score} ")
     end
+    @output.close
+    puts("----- GAME OVER -----")
+    puts("----- Score: #{@snake.score} -----")
   end
 end

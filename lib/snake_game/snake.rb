@@ -2,16 +2,21 @@ require 'set'
 
 class Snake < Being
 
-  def initialize(universe, output, input, point = Point.new(4,10), length = 3 )
+  def initialize(universe, output, input, point = Point.new(4,10), initial_length = 3 )
     super(universe, point, output)
-    @length = length
+    @length = @initial_length = initial_length
     @alive = true
     @input = input
-    move until body.length==length
+    #move until body.length==length
   end
+
 
   def move
     move_by(@input.direction)
+  end
+
+  def score
+    @length -  @initial_length
   end
 
   private

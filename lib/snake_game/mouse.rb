@@ -10,7 +10,7 @@ class Mouse < Being
   def kill
     super
     new_mouse = Mouse.new(@universe, output)
-    @universe.add(new_mouse)
+    universe.add(new_mouse)
     output.clear(head)
   end
 
@@ -18,8 +18,8 @@ class Mouse < Being
 
   def free_random_point(universe)
     loop do
-      x = Random.rand(0..universe.size.x)
-      y = Random.rand(0..universe.size.y)
+      x = Random.rand(0..universe.size.x-1)
+      y = Random.rand(0..universe.size.y-1)
       point = Point.new(x, y)
       if universe.resident_at(point).nil?
         return point
