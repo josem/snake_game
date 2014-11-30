@@ -1,0 +1,19 @@
+@startuml
+Game --> Snake : alive? >
+Game -left-> Input : scan >
+Game --> Universe : move >
+Game -right-> Output : set title >
+
+Being <|-- Snake
+Being <|-- Mouse
+Universe o-- Being : populated by >
+
+
+Being --> Being : kill >
+Snake -right-> Mouse : eat >
+
+Snake --> Output : draw >
+Mouse --> Output : draw >
+Snake --> Input : get key >
+
+@enduml
