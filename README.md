@@ -17,8 +17,12 @@ snake_game
 
 ![Demo](/img/demo.gif "Demo")
 
+## Design
+![Design](/img/snake-uml.png "Design")
+
 ## Changelog
 * **0.0.1** First version (07/04/2014)
+* **1.0.0** improved OO design (30/11/2014)
 
 ## Contribution Guidelines
 I didn't add specs because this is just a fun project to try Curses, and it's just a game. If you want to add something new just do it and send me a PR.

@@ -11,7 +11,7 @@ Gem::Specification.new name, SnakeGame::VERSION do |s|
   s.homepage = "http://github.com/josem/#{name}"
   s.authors = ["José M. Gilgado"]
   s.files = `git ls-files`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.license = "MIT"
   s.add_runtime_dependency "curses"
 end
