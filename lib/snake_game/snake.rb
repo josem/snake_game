@@ -2,20 +2,16 @@ require 'set'
 
 class Snake < Being
 
-  def initialize(universe, point = Point.new(4,10), length = 3 )
-    super.initialize(universe, point)
+  def initialize(universe, output, input, point = Point.new(4,10), length = 3 )
+    super(universe, point, output)
     @length = length
-    @current_direction = Direction::RIGHT
     @alive = true
+    @input = input
     move until body.length==length
   end
 
-  def set_direction(direction)
-    @current_direction = direction unless Direction.are_opposite?(@current_direction, direction)
-  end
-
   def move
-    move_by(@current_direction)
+    move_by(@input.direction)
   end
 
   private
@@ -26,15 +22,16 @@ class Snake < Being
   end
 
   def move_to(position)
-    cell = universe.cell_at(position)
-    eat(cell.resident)
+    other = universe.resident_at(position)
+    eat(other) unless other.nil?
     body.unshift(position)
     trim
+    @output.draw('O', position)
   end
 
   def eat(other)
     other.kill
-    self.grow
+    grow
   end
 
   def grow
@@ -42,7 +39,10 @@ class Snake < Being
   end
 
   def trim
-    body.pop while @length < body.length
+    while body.length > @length
+      left_point = body.pop
+      @output.clear(left_point)
+    end
   end
 
 end

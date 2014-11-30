@@ -16,11 +16,11 @@ class Point
 
   #scalar multiplication
   def *(number)
-    Point.new(self.x * number, slef.y * number)
+    Point.new(self.x * number, self.y * number)
   end
 
   def ==(point)
-    (self.x == point.x) and (self.y == pont.y)
+    (point!=nil) && (self.x == point.x) && (self.y == point.y)
   end
 
 end
